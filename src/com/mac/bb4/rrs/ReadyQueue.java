@@ -76,5 +76,9 @@ public class ReadyQueue {
 
 		return list.get(1);
 	}
+	
+	public int getSize() {
+		return list.size();
+	}
 
 }

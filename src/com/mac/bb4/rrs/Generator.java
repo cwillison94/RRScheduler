@@ -3,8 +3,8 @@ package com.mac.bb4.rrs;
 import java.util.Random;
 
 public class Generator extends Thread {
-	private static final int PROCESS_MIN_TIME = 5;
-	private static final int PROCESS_MAX_TIME = 30;
+	private static final int PROCESS_MIN_TIME = 1000; //1000ms = 1s
+	private static final int PROCESS_MAX_TIME = 15000;   //15000ms = 15s
 	
 	private boolean run = false;
 	private int idCounter =  0;
@@ -32,17 +32,19 @@ public class Generator extends Thread {
 		while(run){
 			
 			Process p = new Process(idCounter, getRandProcessTime());
-			System.out.println(p.toString());
+			System.out.println("Loaded into Queue = [" + p.toString()+ "]");
 			queue.enqueue(p);
 			
 			//TODO add code to add processes at random times
 			//this should probably be changed
 			try {
-				sleep(10000 + rGen.nextInt(35000-10000 + 1)); //sleep for 10 to 35 seconds -should probably change
+				sleep(5000 + rGen.nextInt(20000-5000 + 1)); //sleep for 5 to 20 seconds -should probably change
 				//sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
+			idCounter++;
 		}
 	}
 
@@ -61,11 +63,13 @@ public class Generator extends Thread {
 		return rGen.nextInt((PROCESS_MAX_TIME-PROCESS_MIN_TIME) + 1) + PROCESS_MIN_TIME;
 	}
 	
+	/*
 	public static void main(String[] args) {
 		Generator generator = new Generator();
 		
 		generator.start();
 	}
+	*/
 	
 
 	
