@@ -38,7 +38,7 @@ public class ReadyQueue {
 	 * @return void
 	 * 
 	 * */
-	public void enqueue(Process process) {
+	public synchronized void enqueue(Process process) {
 		list.add(process);
 	}
 
@@ -51,12 +51,12 @@ public class ReadyQueue {
 	 * @see {@link EmptyStackException}
 	 * 
 	 * */
-	public Process dequeue() {
+	public synchronized Process dequeue() {
 		if (isEmpty())
 			throw new EmptyStackException();
 
-		Process process = list.get(1);
-		list.remove(1);
+		Process process = list.get(0);
+		list.remove(0);
 
 		return process;
 	}
