@@ -1,5 +1,9 @@
 package com.mac.bb4.rrs;
 
+/**
+ * TODO: make this class a singleton
+ * 
+ * */
 public class CPU {
 
 	private int timeQuantum;
@@ -30,11 +34,17 @@ public class CPU {
 		else
 			p.start();
 
-		if (p.getTimeRemaining() < timeQuantum)
-			Thread.sleep(p.getTimeRemaining());
-		else
-			Thread.sleep(timeQuantum);
-		
+		if (p.getTimeRemaining() >= 0 && p.getTimeRemaining() < timeQuantum) {
+			int timeRemaining = p.getTimeRemaining();
+			p.join(timeRemaining);
+			//Thread.sleep(timeRemaining);
+			System.out.format("CPU:Process:%d Executed for: %d seconds \n", p.getID(), timeRemaining);
+		} else {
+			p.join(timeQuantum);
+			//Thread.sleep(timeQuantum);
+			System.out.format("CPU:Process:%d Executed for: %d seconds \n", p.getID(), timeQuantum);
+		}
+
 		p.suspendThread();
 
 		return p;
