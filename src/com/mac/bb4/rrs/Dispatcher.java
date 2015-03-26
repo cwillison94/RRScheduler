@@ -11,12 +11,13 @@ public class Dispatcher extends Thread {
 	private ReadyQueue queue;
 
 	private CPU cpu;
+	
 	private GrimReaper reaper;
 
 	public Dispatcher(ReadyQueue queue, CPU cpu) {
 		this.queue = queue;
 		this.cpu = cpu;
-		this.reaper = new GrimReaper(queue);
+		reaper = new GrimReaper(queue);
 	}
 
 	@Override
@@ -39,12 +40,7 @@ public class Dispatcher extends Thread {
 
 			Process toLoad = queue.dequeue();
 			System.out.println("Dispatcher:Loaded into CPU:\t" + toLoad.toString());
-			Process p = cpu.work(toLoad);
-
-			// call grimreaper put back in if not finished
-			// do this in the reaper
-
-			reaper.reap(p);
+			cpu.work(toLoad);
 		}
 	}
 }

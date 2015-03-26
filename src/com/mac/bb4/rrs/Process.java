@@ -8,7 +8,7 @@ public class Process extends Thread {
 	private boolean run = false;
 	private boolean suspend = false;
 	private Long startTime = 0L;
-	
+
 	private boolean started = false;
 
 	/**
@@ -47,24 +47,22 @@ public class Process extends Thread {
 				continue;
 			timeDiff = (int) (System.currentTimeMillis() - startTime);
 
-//			if (timeRemainingMs % 100 == 0)
-//				System.out.println(this.toString());
 		}
 	}
 
 	public boolean isSuspended() {
 		return suspend;
 	}
-	
-	
+
 	public void suspendThread() {
 		this.suspend = true;
 	}
-	
+
 	public void resumeThread() {
 		startTime = System.currentTimeMillis();
 		this.suspend = false;
 	}
+
 	public boolean isRunning() {
 		return run;
 	}
@@ -90,13 +88,16 @@ public class Process extends Thread {
 	}
 
 	public int getTimeRemaining() {
-		return executionTime - timeDiff;
+		int diff = executionTime - timeDiff;
+		if (diff < 0)
+			return 0;
+		else
+			return diff;
 	}
-	
+
 	public boolean hasStarted() {
 		return started;
 	}
-	
 
 	public boolean isDone() {
 		if (timeDiff >= executionTime)
@@ -112,26 +113,21 @@ public class Process extends Thread {
 	}
 
 	/*
-	public static void main(String[] args) {
-
-		Process p1 = new Process(10, 1000);
-		Process p2 = new Process(11, 2000);
-
-		p1.start();
-		try {
-			Thread.sleep(500);
-			p1.suspendThread();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
-		p2.start();
-
-		while (p2.isAlive());
-
-		p1.resumeThread();
-
-	}*/
+	 * public static void main(String[] args) {
+	 * 
+	 * Process p1 = new Process(10, 1000); Process p2 = new Process(11, 2000);
+	 * 
+	 * p1.start(); try { Thread.sleep(500); p1.suspendThread(); } catch
+	 * (InterruptedException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); }
+	 * 
+	 * 
+	 * p2.start();
+	 * 
+	 * while (p2.isAlive());
+	 * 
+	 * p1.resumeThread();
+	 * 
+	 * }
+	 */
 }
