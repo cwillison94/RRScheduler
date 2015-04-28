@@ -12,8 +12,7 @@ public class RRScheduler {
 		
 		generator.start();
 		dispatcher.start();
-		
-		
+				
 	}
 
 }
